@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -38,6 +38,23 @@ def get_item(item_id):
             return jsonify(item), 200
         
     return jsonify({"error": "Item not found"}), 404
+
+@app.route("/inventory", methods=["POST"])
+def add_item():
+    data = request.get_json()
+
+    new_item = {
+        "id": len(inventory) + 1,
+        "product_name": data.get("product_name"),
+        "brands": data.get("brands"),
+        "ingredients_text": data.get("ingredients_text"),
+        "price": data.get("price"),
+        "stock": data.get("stock")   
+    }
+
+    inventory.append(new_item)
+
+    return jsonify(new_item), 201
 
 if __name__ == "__main__":
     app.run(debug=True)
