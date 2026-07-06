@@ -29,5 +29,15 @@ def home():
 def get_inventory():
     return jsonify(inventory), 200
 
+@app.route("/inventory/<int:item_id>", methods=["GET"])
+def get_item(item_id):
+
+    for item in inventory:
+
+        if item["id"] == item_id:
+            return jsonify(item), 200
+        
+    return jsonify({"error": "Item not found"}), 404
+
 if __name__ == "__main__":
     app.run(debug=True)
