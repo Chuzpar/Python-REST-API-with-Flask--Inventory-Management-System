@@ -42,7 +42,33 @@ def view_inventory():
 
         print("Unable to retrieve inventory.")
 
+def add_item():
 
+    print("\nAdd New Item")
+
+    product_name = input("Product Name: ")
+    brands = input("Brand: ")
+    ingredients = input("Ingredients: ")
+    price = float(input("Price: "))
+    stock = int(input("Stock: "))
+
+    new_item = {
+        "product_name": product_name,
+        "brands": brands,
+        "ingredients_text": ingredients,
+        "price": price,
+        "stock": stock
+    }
+
+    response = requests.post(BASE_URL + "/inventory", json=new_item)
+
+    if response.status_code == 201:
+
+        print("\nItem added successfully!")
+
+    else:
+
+        print("\nFailed to add item.")
 
 while True:
 
@@ -52,11 +78,43 @@ while True:
 
     if choice == "1":
 
-          view_inventory()
+        view_inventory()
+
+    elif choice == "2":
+
+        add_item()
 
     elif choice == "6":
 
         print("Goodbye!")
+
+        break
+
+    print("\nAdd New Item")
+
+    product_name = input("Product Name: ")
+    brands = input("Brand: ")
+    ingredients = input("Ingredients: ")
+    price = float(input("Price: "))
+    stock = int(input("Stock: "))
+
+    new_item = {
+        "product_name": product_name,
+        "brands": brands,
+        "ingredients_text": ingredients,
+        "price": price,
+        "stock": stock
+    }
+
+    response = requests.post(BASE_URL + "/inventory", json=new_item)
+
+    if response.status_code == 201:
+
+        print("\nItem added successfully!")
+
+    else:
+
+        print("\nFailed to add item.")
 
     break
     if choice == "6":
