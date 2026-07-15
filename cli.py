@@ -19,6 +19,30 @@ def menu():
 
     print("6. Exit")
 
+def view_inventory():
+
+    response = requests.get(BASE_URL + "/inventory")
+
+    if response.status_code == 200:
+
+        inventory = response.json()
+
+        print("\nCurrent Inventory\n")
+
+        for item in inventory:
+
+            print(f"ID: {item['id']}")
+            print(f"Product: {item['product_name']}")
+            print(f"Brand: {item['brands']}")
+            print(f"Price: ${item['price']}")
+            print(f"Stock: {item['stock']}")
+            print("--------------------------")
+
+    else:
+
+        print("Unable to retrieve inventory.")
+
+
 
 while True:
 
@@ -26,8 +50,15 @@ while True:
 
     choice = input("Choose an option: ")
 
-    print("You chose:", choice)
+    if choice == "1":
 
+          view_inventory()
+
+    elif choice == "6":
+
+        print("Goodbye!")
+
+    break
     if choice == "6":
 
         print("Goodbye!")
