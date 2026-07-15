@@ -98,6 +98,22 @@ def update_item():
 
         print("\nItem not found.")
 
+def delete_item():
+
+    print("\nDelete Inventory Item")
+
+    item_id = input("Enter Item ID: ")
+
+    response = requests.delete(BASE_URL + "/inventory/" + item_id)
+
+    if response.status_code == 200:
+
+        print("\nItem deleted successfully!")
+
+    else:
+
+        print("\nItem not found.")
+
 while True:
 
     menu()
@@ -115,7 +131,11 @@ while True:
     elif choice == "3":
         
         update_item()
-        
+    
+    elif choice == "4":
+
+        delete_item()
+
     elif choice == "6":
 
         print("Goodbye!")
