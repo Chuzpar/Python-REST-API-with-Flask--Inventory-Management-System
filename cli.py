@@ -114,6 +114,30 @@ def delete_item():
 
         print("\nItem not found.")
 
+def search_product():
+
+    print("\nSearch OpenFoodFacts")
+
+    barcode = input("Enter barcode: ")
+
+    response = requests.get(BASE_URL + "/search/" + barcode)
+
+    if response.status_code == 200:
+
+        product = response.json()
+
+        print("\nProduct Found\n")
+
+        print("Product Name:", product.get("product_name"))
+
+        print("Brand:", product.get("brands"))
+
+        print("Ingredients:", product.get("ingredients_text"))
+
+    else:
+
+        print("Product not found.")
+
 while True:
 
     menu()
@@ -135,6 +159,10 @@ while True:
     elif choice == "4":
 
         delete_item()
+
+    elif choice == "5":
+
+        search_product()
 
     elif choice == "6":
 
