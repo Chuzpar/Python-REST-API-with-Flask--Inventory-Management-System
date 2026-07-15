@@ -1,3 +1,4 @@
+from openfoodfacts import get_product_by_barcode
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
@@ -83,3 +84,14 @@ def delete_item(item_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/search/<barcode>", methods=["GET"])
+def search_product(barcode):
+
+    product = get_product_by_barcode(barcode)
+
+    if product:
+        return jsonify(product), 200
+
+    return jsonify({"error": "Product not found"}), 404
+    
