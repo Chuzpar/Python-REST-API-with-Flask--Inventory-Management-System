@@ -70,6 +70,34 @@ def add_item():
 
         print("\nFailed to add item.")
 
+def update_item():
+
+    print("\nUpdate Inventory Item")
+
+    item_id = input("Enter Item ID: ")
+
+    price = float(input("New Price: "))
+
+    stock = int(input("New Stock: "))
+
+    updated_item = {
+        "price": price,
+        "stock": stock
+    }
+
+    response = requests.patch(
+        BASE_URL + "/inventory/" + item_id,
+        json=updated_item
+    )
+
+    if response.status_code == 200:
+
+        print("\nItem updated successfully!")
+
+    else:
+
+        print("\nItem not found.")
+
 while True:
 
     menu()
@@ -84,6 +112,10 @@ while True:
 
         add_item()
 
+    elif choice == "3":
+        
+        update_item()
+        
     elif choice == "6":
 
         print("Goodbye!")
