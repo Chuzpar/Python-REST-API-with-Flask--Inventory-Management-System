@@ -80,6 +80,19 @@ async function handleSubmit(event) {
 
     console.log("Sending to Flask:", newProduct);
 
+const response = await fetch("http://127.0.0.1:5000/inventory", {
+
+    method: "POST",
+
+    headers: {
+        "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify(newProduct)
+
+});
+console.log("Status:", response.status);
+
 }
     return (
         <div>
