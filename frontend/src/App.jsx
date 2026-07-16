@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import InventoryCard from "./components/InventoryCard";
+import AddProductForm from "./components/AddProductForm";
 
 function App() {
 
@@ -15,31 +16,19 @@ function App() {
 
   }, []);
 
+  const handleAddProduct = (product) => {
+    setInventory((prevInventory) => [...prevInventory, product]);
+  };
+
   return (
-
-<div className="container">
-
-<h1>Inventory Management</h1>
-
-{inventory.map((item)=>(
-
-<div className="card" key={item.id}>
-
-<h2>{item.product_name}</h2>
-
-<p>Brand: {item.brands}</p>
-
-<p>Price: ${item.price}</p>
-
-<p>Stock: {item.stock}</p>
-
-</div>
-
-))}
-
-</div>
-
-);
+    <div className="container">
+      <h1>Inventory Management</h1>
+      <AddProductForm onAddProduct={handleAddProduct} />
+      {inventory.map((item) => (
+        <InventoryCard key={item.id} item={item} />
+      ))}
+    </div>
+  );
 }
 
 export default App;
