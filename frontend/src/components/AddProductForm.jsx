@@ -64,6 +64,23 @@ console.log({
     price,
     stock
 });
+async function handleSubmit(event) {
+
+    event.preventDefault();
+
+    const newProduct = {
+
+        product_name: productName,
+        brands: brand,
+        ingredients_text: ingredients,
+        price: Number(price),
+        stock: Number(stock)
+
+    };
+
+    console.log("Sending to Flask:", newProduct);
+
+}
     return (
         <div>
             <h2>Add Product</h2>
