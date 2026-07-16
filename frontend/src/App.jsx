@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
 
@@ -14,24 +15,30 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h1>Inventory Management</h1>
 
-      {inventory.map((item) => (
-        <div key={item.id}>
-          <h3>{item.product_name}</h3>
+<div className="container">
 
-          <p>Brand: {item.brands}</p>
+<h1>Inventory Management</h1>
 
-          <p>Price: ${item.price}</p>
+{inventory.map((item)=>(
 
-          <p>Stock: {item.stock}</p>
+<div className="card" key={item.id}>
 
-          <hr />
-        </div>
-      ))}
-    </div>
-  );
+<h2>{item.product_name}</h2>
+
+<p>Brand: {item.brands}</p>
+
+<p>Price: ${item.price}</p>
+
+<p>Stock: {item.stock}</p>
+
+</div>
+
+))}
+
+</div>
+
+);
 }
 
 export default App;
