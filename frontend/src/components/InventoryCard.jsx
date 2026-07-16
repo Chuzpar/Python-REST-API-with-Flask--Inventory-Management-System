@@ -12,6 +12,8 @@ function InventoryCard({ item }) {
 
             <p>Stock: {item.stock}</p>
 
+            <button>Edit</button>
+
         </div>
 
     );
