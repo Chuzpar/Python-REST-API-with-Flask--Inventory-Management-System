@@ -1,101 +1,62 @@
 import { useState } from "react";
 
 function AddProductForm({ onProductAdded }) {
-    
-const [productName, setProductName] = useState("");
-const [brand, setBrand] = useState("");
-const [ingredients, setIngredients] = useState("");
-const [price, setPrice] = useState("");
-const [stock, setStock] = useState("");
 
-async function handleSubmit(event) {
+    const [productName, setProductName] = useState("");
+    const [brand, setBrand] = useState("");
+    const [ingredients, setIngredients] = useState("");
+    const [price, setPrice] = useState("");
+    const [stock, setStock] = useState("");
 
-    event.preventDefault();
+    async function handleSubmit(event) {
 
-    const newProduct = {
+        event.preventDefault();
 
-        product_name: productName,
+        const newProduct = {
+            product_name: productName,
+            brands: brand,
+            ingredients_text: ingredients,
+            price: Number(price),
+            stock: Number(stock)
+        };
 
-        brands: brand,
+        console.log("Sending to Flask:", newProduct);
 
-        ingredients_text: ingredients,
+        const response = await fetch("http://127.0.0.1:5000/inventory", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newProduct)
+        });
 
-        price: Number(price),
+        console.log("Status:", response.status);
 
-        stock: Number(stock)
+        if (response.ok) {
 
-    };
+            console.log("Product added successfully!");
 
-    const response = await fetch("http://127.0.0.1:5000/inventory", {
+            setProductName("");
+            setBrand("");
+            setIngredients("");
+            setPrice("");
+            setStock("");
 
-        method: "POST",
+            if (onProductAdded) {
+                onProductAdded();
+            }
 
-        headers: {
+        } else {
 
-            "Content-Type": "application/json"
+            alert("Failed to add product.");
 
-        },
-
-        body: JSON.stringify(newProduct)
-
-    });
-
-    if (response.ok) {
-
-        setProductName("");
-        setBrand("");
-        setIngredients("");
-        setPrice("");
-        setStock("");
-
-        onProductAdded();
-
-    } else {
-
-        alert("Failed to add product.");
+        }
 
     }
 
-}
-console.log({
-    productName,
-    brand,
-    ingredients,
-    price,
-    stock
-});
-async function handleSubmit(event) {
-
-    event.preventDefault();
-
-    const newProduct = {
-
-        product_name: productName,
-        brands: brand,
-        ingredients_text: ingredients,
-        price: Number(price),
-        stock: Number(stock)
-
-    };
-
-    console.log("Sending to Flask:", newProduct);
-
-const response = await fetch("http://127.0.0.1:5000/inventory", {
-
-    method: "POST",
-
-    headers: {
-        "Content-Type": "application/json"
-    },
-
-    body: JSON.stringify(newProduct)
-
-});
-console.log("Status:", response.status);
-
-}
     return (
         <div>
+
             <h2>Add Product</h2>
 
             <form onSubmit={handleSubmit}>
@@ -145,11 +106,13 @@ console.log("Status:", response.status);
 
                 <br /><br />
 
-                <button>Add Product</button>
+                <button type="submit">Add Product</button>
 
             </form>
+
         </div>
     );
+
 }
 
 export default AddProductForm;
