@@ -1,5 +1,8 @@
+import { useState } from "react";
 function InventoryCard({ item }) {
 
+    const [isEditing, setIsEditing] = useState(false);
+console.log(isEditing);
     return (
 
         <div className="card">
@@ -12,8 +15,9 @@ function InventoryCard({ item }) {
 
             <p>Stock: {item.stock}</p>
 
-            <button>Edit</button>
-
+            <button onClick={() => setIsEditing(true)}>
+                Edit
+            </button>
         </div>
 
     );
