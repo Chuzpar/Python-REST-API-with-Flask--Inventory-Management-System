@@ -1,37 +1,48 @@
 import { useEffect, useState } from "react";
+import "./App.css";
+import InventoryCard from "./components/InventoryCard";
+import AddProductForm from "./components/AddProductForm";
 
 function App() {
 
-  const [inventory, setInventory] = useState([]);
+    const [inventory, setInventory] = useState([]);
 
-  useEffect(() => {
+    function fetchInventory() {
 
-    fetch("http://127.0.0.1:5000/inventory")
-      .then((response) => response.json())
-      .then((data) => setInventory(data))
-      .catch((error) => console.error(error));
+        fetch("http://127.0.0.1:5000/inventory")
+            .then((response) => response.json())
+            .then((data) => setInventory(data))
+            .catch((error) => console.error(error));
 
-  }, []);
+    }
 
-  return (
-    <div>
-      <h1>Inventory Management</h1>
+    useEffect(() => {
 
-      {inventory.map((item) => (
-        <div key={item.id}>
-          <h3>{item.product_name}</h3>
+        fetchInventory();
 
-          <p>Brand: {item.brands}</p>
+    }, []);
 
-          <p>Price: ${item.price}</p>
+    return (
 
-          <p>Stock: {item.stock}</p>
+        <div className="container">
 
-          <hr />
+            <h1>Inventory Management</h1>
+
+            <AddProductForm onProductAdded={fetchInventory} />
+
+            {inventory.map((item) => (
+
+                <InventoryCard
+                    key={item.id}
+                    item={item}
+                />
+
+            ))}
+
         </div>
-      ))}
-    </div>
-  );
+
+    );
+
 }
 
 export default App;
